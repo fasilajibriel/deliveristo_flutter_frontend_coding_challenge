@@ -1,4 +1,4 @@
-import 'package:deliveristo_flutter_frontend_coding_challenge/constants/app_constants.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
