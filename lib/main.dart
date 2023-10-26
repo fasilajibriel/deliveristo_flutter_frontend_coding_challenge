@@ -1,4 +1,5 @@
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/app_constants.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/features/base_layout.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
@@ -23,7 +24,7 @@ class Main extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Scaffold(),
+      home: const BaseLayout(),
     );
   }
 }
