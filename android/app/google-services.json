@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "409783684013",
+    "project_id": "deliveristo-flutter-challenge",
+    "storage_bucket": "deliveristo-flutter-challenge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409783684013:android:1325f300edd3d11ff8af24",
+        "android_client_info": {
+          "package_name": "com.example.deliveristo_flutter_frontend_coding_challenge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "409783684013-q3h59d51dm0lgm9v503t6kd0pahofg4r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.deliveristo_flutter_frontend_coding_challenge",
+            "certificate_hash": "5442ee11dcace1f31c6777a66a63d2ea6f274d96"
+          }
+        },
+        {
+          "client_id": "409783684013-ja4uc23kj1bpau2k296tn9sg43jlvtn8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVkxOY6TO3wAJ1qgpZn1us1zGY3pDndhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "409783684013-ja4uc23kj1bpau2k296tn9sg43jlvtn8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "409783684013-ehaed5rtf1qen2ti51qkjflssqijjl6b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.deliveristoFlutterFrontendCodingChallenge"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
