@@ -1,6 +1,7 @@
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/app_constants.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/base_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Future<void> main() async {
   runApp(const Main());
@@ -22,6 +23,9 @@ class Main extends StatelessWidget {
       title: AppConstants.appTitle,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context).textTheme,
+        ),
         useMaterial3: true,
       ),
       home: const BaseLayout(),

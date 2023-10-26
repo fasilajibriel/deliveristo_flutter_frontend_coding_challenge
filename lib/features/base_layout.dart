@@ -1,3 +1,6 @@
+import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/presentation/views/generator_view.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/features/history/presentation/views/history_view.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/features/profile/presentation/views/profile_view.dart';
 import 'package:flutter/material.dart';
 
 /// A base layout widget for building the core structure of the application.
@@ -28,21 +31,9 @@ class _BaseLayoutState extends State<BaseLayout> {
   @override
   void initState() {
     _pages
-      ..add(
-        const Center(
-          child: Text("History"),
-        ),
-      )
-      ..add(
-        const Center(
-          child: Text("Generate"),
-        ),
-      )
-      ..add(
-        const Center(
-          child: Text("Profile"),
-        ),
-      );
+      ..add(const HistoryView())
+      ..add(const GeneratorView())
+      ..add(const ProfileView());
     super.initState();
   }
 
@@ -65,7 +56,6 @@ class _BaseLayoutState extends State<BaseLayout> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
-        landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const [
