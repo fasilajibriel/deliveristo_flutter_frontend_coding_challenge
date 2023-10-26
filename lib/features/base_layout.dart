@@ -1,6 +1,4 @@
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/presentation/views/generator_view.dart';
-import 'package:deliveristo_flutter_frontend_coding_challenge/features/history/presentation/views/history_view.dart';
-import 'package:deliveristo_flutter_frontend_coding_challenge/features/profile/presentation/views/profile_view.dart';
 import 'package:flutter/material.dart';
 
 /// A base layout widget for building the core structure of the application.
@@ -24,58 +22,16 @@ class BaseLayout extends StatefulWidget {
 }
 
 class _BaseLayoutState extends State<BaseLayout> {
-  int _selectedIndex = 1;
-
-  final List<Widget> _pages = [];
-
-  @override
-  void initState() {
-    _pages
-      ..add(const HistoryView())
-      ..add(const GeneratorView())
-      ..add(const ProfileView());
-    super.initState();
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedIndex],
+      body: const GeneratorView(),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          _onItemTapped(1);
-        },
+        onPressed: () {},
         label: const Text("Generate"),
         icon: const Icon(Icons.shape_line_outlined),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: "History",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.history,
-              color: Colors.transparent,
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: "Profile",
-          ),
-        ],
-      ),
     );
   }
 }

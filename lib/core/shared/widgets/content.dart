@@ -1,33 +1,26 @@
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/theme_constants.dart';
-import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/image_grid.dart';
 import 'package:flutter/material.dart';
 
 /// A content widget for displaying the main content of the application.
 ///
 /// The `Content` class provides a container for displaying the primary content
 /// of the application. It typically includes a title and an optional
-/// [ImageGrid] widget for displaying images or other content.
+/// [Widget] for displaying content.
 ///
-/// - [imageGrid]: An optional [ImageGrid] widget that can be provided to
-/// display images or additional content.
+/// - [imageGrid]: An optional [Widget] that can be provided to display content.
 class Content extends StatelessWidget {
-  /// The optional [ImageGrid] widget for displaying images or additional
-  /// content.
-  final ImageGrid? imageGrid;
-
-  /// The title to display in the content.
-  final String title;
+  /// The optional [Widget] for displaying content.
+  final Widget? child;
 
   /// Constructor for the `Content` class.
   ///
   /// The `Content` widget serves as a container for displaying the main content
   /// of the application.
   ///
-  /// - [imageGrid]: An optional [ImageGrid] widget to display additional
+  /// - [imageGrid]: An optional [Widget] to display additional
   /// content. If not provided, it will be an empty container.
   const Content({
-    required this.title,
-    this.imageGrid,
+    this.child,
     super.key,
   });
 
@@ -35,23 +28,12 @@ class Content extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(
-          ThemeConstants.defaultPadding,
+        padding: const EdgeInsets.only(
+          left: ThemeConstants.defaultPadding,
+          right: ThemeConstants.defaultPadding,
+          top: ThemeConstants.defaultPadding,
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: ThemeConstants.bold,
-                ),
-              ),
-              imageGrid ?? const SizedBox(),
-            ],
-          ),
-        ),
+        child: child,
       ),
     );
   }

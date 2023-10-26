@@ -1,4 +1,6 @@
+import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/theme_constants.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/content.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/page_title.dart';
 import 'package:flutter/material.dart';
 
 /// A widget representing the Dog Image Generator view.
@@ -23,7 +25,14 @@ class _GeneratorViewState extends State<GeneratorView> {
   @override
   Widget build(BuildContext context) {
     return const Content(
-      title: "Image\nGenerator",
+      child: Column(
+        children: [
+          PageTitle(title: "Welcome"),
+          SizedBox(
+            height: ThemeConstants.defaultPadding,
+          ),
+        ],
+      ),
     );
   }
 }
