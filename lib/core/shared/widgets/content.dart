@@ -28,10 +28,8 @@ class Content extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(
-          left: ThemeConstants.defaultPadding,
-          right: ThemeConstants.defaultPadding,
-          top: ThemeConstants.defaultPadding,
+        padding: const EdgeInsets.all(
+          ThemeConstants.defaultPadding,
         ),
         child: child,
       ),

@@ -1,4 +1,4 @@
-import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/presentation/views/generator_view.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/views/generator_view.dart';
 import 'package:flutter/material.dart';
 
 /// A base layout widget for building the core structure of the application.

@@ -1,5 +1,6 @@
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/app_constants.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/base_layout.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/features/onboarding/views/onboarding_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,7 +32,7 @@ class Main extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const BaseLayout(),
+      home: const OnboardingView(),
     );
   }
 }
