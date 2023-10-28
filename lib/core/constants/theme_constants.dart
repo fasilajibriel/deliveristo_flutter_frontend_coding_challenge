@@ -42,4 +42,22 @@ class ThemeConstants {
 
   /// Defines a constant for a black font weight (heaviest).
   static const black = FontWeight.w900;
+
+  /// A `ShapeBorder` that defines a continuous rectangular border with a
+  /// specific radius.
+  ///
+  /// The `continuousRectangleBorder` variable represents a
+  /// [ContinuousRectangleBorder] with a defined border radius. This shape
+  /// border is often used to clip widgets with rounded corners in a continuous
+  /// manner.
+  ///
+  /// - [borderRadius]: The radius applied to all corners of the rectangular
+  /// shape.
+  static const ShapeBorder continuousRectangleBorder = ContinuousRectangleBorder(
+    borderRadius: BorderRadius.all(
+      Radius.circular(
+        ThemeConstants.customContainerClipperRadius,
+      ),
+    ),
+  );
 }

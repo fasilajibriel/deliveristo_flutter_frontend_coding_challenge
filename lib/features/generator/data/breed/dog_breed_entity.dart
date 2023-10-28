@@ -13,17 +13,17 @@ import 'package:equatable/equatable.dart';
 /// - [status]: The response status, which can be "success" or an error message.
 class DogBreedEntity extends Equatable {
   /// A map associating breed categories with their sub-breeds.
-  final Map<String, List<String>>? message;
+  final Map<String, List<String>>? breeds;
 
   /// The response status, which can be "success" or an error message.
   final String? status;
 
   @override
-  List<Object?> get props => [message, status];
+  List<Object?> get props => [breeds, status];
 
-  /// Creates a [DogBreedEntity] with the provided [message] and [status].
+  /// Creates a [DogBreedEntity] with the provided [breeds] and [status].
   const DogBreedEntity({
-    required this.message,
+    required this.breeds,
     required this.status,
   });
 }

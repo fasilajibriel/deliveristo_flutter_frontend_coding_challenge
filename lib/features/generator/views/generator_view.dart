@@ -2,6 +2,7 @@ import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/the
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/content.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/page_title.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 /// A widget representing the Dog Image Generator view.
 ///
@@ -24,13 +25,31 @@ class GeneratorView extends StatefulWidget {
 class _GeneratorViewState extends State<GeneratorView> {
   @override
   Widget build(BuildContext context) {
-    return const Content(
+    return Content(
       child: Column(
         children: [
-          PageTitle(title: "Welcome"),
-          SizedBox(
-            height: ThemeConstants.defaultPadding,
-          ),
+          const PageTitle(title: "Welcome"),
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    child: Lottie.asset(
+                      'assets/lottie/generate_empty.json',
+                    ),
+                  ),
+                  const Text(
+                    "Hmm, what does\nthat button do?",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );

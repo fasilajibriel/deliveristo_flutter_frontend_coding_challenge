@@ -12,10 +12,10 @@ import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator
 /// application, including parsing data from API responses and preparing data
 /// for display or storage.
 class DogBreedModel extends DogBreedEntity {
-  /// Creates a [DogBreedModel] with the provided [message] and [status].
+  /// Creates a [DogBreedModel] with the provided [breeds] and [status].
   const DogBreedModel({
-    required super.message,
-    required super.status,
+    super.breeds,
+    super.status,
   });
 
   /// Creates a [DogBreedModel] from a JSON-encoded string.
@@ -29,25 +29,33 @@ class DogBreedModel extends DogBreedEntity {
   /// Creates a [DogBreedModel] from a map of dynamic data.
   ///
   /// This factory method constructs a [DogBreedModel] object from a map
-  /// [data] that includes [message] (associating breed categories with
+  /// [data] that includes [breeds] (associating breed categories with
   /// sub-breeds) and [status] (response status).
   factory DogBreedModel.fromMap(Map<String, dynamic> data) {
-    final message = Map<String, List<String>>.from(
+    final message = Map<String, dynamic>.from(
       data['message'] as Map<String, dynamic>,
+    );
+    final messageConverted = Map<String, List<String>>.fromEntries(
+      message.entries.map(
+        (entry) => MapEntry(
+          entry.key,
+          (entry.value as List).cast<String>(),
+        ),
+      ),
     );
 
     return DogBreedModel(
-      message: message,
+      breeds: messageConverted,
       status: data['status'] as String,
     );
   }
 
   /// Converts the [DogBreedModel] to a map of dynamic data.
   ///
-  /// This method converts the model into a map that includes [message] (as a
+  /// This method converts the model into a map that includes [breeds] (as a
   /// map of breed categories and sub-breeds) and [status] (response status).
   Map<String, dynamic> toMap() => {
-        'message': message,
+        'message': breeds,
         'status': status,
       };
 
@@ -61,13 +69,13 @@ class DogBreedModel extends DogBreedEntity {
   ///
   /// This method creates a new instance of [DogBreedModel] by copying the
   /// original model's properties and applying the specified changes. Pass
-  /// the new values for [message] or [status] to create the modified copy.
+  /// the new values for [breeds] or [status] to create the modified copy.
   DogBreedModel copyWith({
-    Map<String, List<String>>? message,
+    Map<String, List<String>>? breeds,
     String? status,
   }) {
     return DogBreedModel(
-      message: message ?? this.message,
+      breeds: breeds ?? this.breeds,
       status: status ?? this.status,
     );
   }

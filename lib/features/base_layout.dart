@@ -1,3 +1,7 @@
+import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/theme_constants.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/content.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/custom_button.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/custom_container.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/views/generator_view.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +31,29 @@ class _BaseLayoutState extends State<BaseLayout> {
     return Scaffold(
       body: const GeneratorView(),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () => showModalBottomSheet(
+          context: context,
+          shape: ThemeConstants.continuousRectangleBorder,
+          constraints: BoxConstraints(
+            minWidth: MediaQuery.of(context).size.width,
+          ),
+          builder: (context) => Content(
+            bottom: false,
+            child: Wrap(
+              children: [
+                CustomButton(
+                  onTap: () => Navigator.pop(context),
+                  child: const Text(
+                    "Generate",
+                    style: TextStyle(
+                      fontWeight: ThemeConstants.semiBold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         label: const Text("Generate"),
         icon: const Icon(Icons.shape_line_outlined),
       ),
