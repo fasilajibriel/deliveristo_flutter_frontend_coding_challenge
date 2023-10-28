@@ -13,6 +13,8 @@ class PageTitle extends StatelessWidget {
   /// The title to be displayed.
   final String title;
 
+  final String? description;
+
   /// Creates a [PageTitle] widget.
   ///
   /// The [title] parameter is required and specifies the text that appears as
@@ -20,6 +22,7 @@ class PageTitle extends StatelessWidget {
   /// identify this widget in the widget tree.
   const PageTitle({
     required this.title,
+    this.description,
     super.key,
   });
 
@@ -30,12 +33,25 @@ class PageTitle extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 25,
-              fontWeight: ThemeConstants.bold,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 25,
+                  fontWeight: ThemeConstants.bold,
+                ),
+              ),
+              if (description != null)
+                Text(
+                  "$description",
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: ThemeConstants.medium,
+                  ),
+                ),
+            ],
           ),
           IconButton(
             onPressed: () {},

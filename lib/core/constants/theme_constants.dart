@@ -53,7 +53,8 @@ class ThemeConstants {
   ///
   /// - [borderRadius]: The radius applied to all corners of the rectangular
   /// shape.
-  static const ShapeBorder continuousRectangleBorder = ContinuousRectangleBorder(
+  static const ShapeBorder continuousRectangleBorder =
+      ContinuousRectangleBorder(
     borderRadius: BorderRadius.all(
       Radius.circular(
         ThemeConstants.customContainerClipperRadius,

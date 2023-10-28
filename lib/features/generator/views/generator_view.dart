@@ -1,8 +1,11 @@
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/theme_constants.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/content.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/page_title.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/features/onboarding/data/user/user_model.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/features/onboarding/state/onboarding_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 /// A widget representing the Dog Image Generator view.
 ///
@@ -25,10 +28,15 @@ class GeneratorView extends StatefulWidget {
 class _GeneratorViewState extends State<GeneratorView> {
   @override
   Widget build(BuildContext context) {
+    final UserModel user = context.read<OnboardingStateProvider>().getUser;
+
     return Content(
       child: Column(
         children: [
-          const PageTitle(title: "Welcome"),
+          PageTitle(
+            title: "Welcome",
+            description: user != const UserModel.empty() ? user.displayName : null,
+          ),
           Expanded(
             child: Center(
               child: Column(

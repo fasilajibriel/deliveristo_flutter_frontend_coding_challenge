@@ -1,11 +1,10 @@
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/theme_constants.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/content.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/custom_button.dart';
-import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/state/generator_state_provider.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/loading_animation.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/onboarding/state/onboarding_state_provider.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/onboarding/views/widgets/hyperlink.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 /// Represents an onboarding view in the application.
@@ -28,29 +27,137 @@ class _OnboardingViewState extends State<OnboardingView> {
   @override
   void initState() {
     super.initState();
-    context.read<OnboardingStateProvider>().checkFirstTime();
+    context.read<OnboardingStateProvider>().checkFirstTime().then((isFirstTime) {
+      if (!isFirstTime) {
+        Navigator.pushReplacementNamed(context, "/base");
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    OnboardingViewState pageState = context.watch<OnboardingStateProvider>().getPageState;
+    final OnboardingViewState pageState = context.watch<OnboardingStateProvider>().getPageState;
 
     return Scaffold(
       body: Content(
         child: Column(
           children: [
             Expanded(child: Container()),
-            if (context.watch<OnboardingStateProvider>().getPageState == OnboardingViewState.loading)
-              SizedBox(
-                width: 100.0,
-                height: 100.0,
-                child: Lottie.asset(
-                  'assets/lottie/loading.json',
-                ),
+            if (pageState == OnboardingViewState.loading)
+              const LoadingAnimation(
+                size: 100.0,
               ),
             if (pageState != OnboardingViewState.loading)
               CustomButton(
-                onTap: () {},
+                onTap: () async {
+                  // TODO: Move to somewhere
+                  try {
+                    final signInResult = await context.read<OnboardingStateProvider>().signInWithGoogle();
+
+                    signInResult.fold(
+                      (left) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(left.message),
+                          ),
+                        );
+                      },
+                      (right) async {
+                        final writeUserResult = await context.read<OnboardingStateProvider>().writeUserToFirestore();
+
+                        writeUserResult.fold(
+                          (left) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(left.message),
+                              ),
+                            );
+                          },
+                          (right) async {
+                            final writeLocalStorageResult =
+                                await context.read<OnboardingStateProvider>().writeUserToLocalStorage();
+
+                            writeLocalStorageResult.fold(
+                              (left) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(left.message),
+                                  ),
+                                );
+                              },
+                              (right) {
+                                if (right) {
+                                  Navigator.pushReplacementNamed(context, "/base");
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text("Unable to store user data. Please try again!"),
+                                    ),
+                                  );
+                                }
+                              },
+                            );
+                          },
+                        );
+                      },
+                    );
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Oops! Something went wrong. Please try again"),
+                      ),
+                    );
+                  }
+
+                  // await context.read<OnboardingStateProvider>().signInWithGoogle().then((value) {
+                  //   value.fold(
+                  //     (left) => ScaffoldMessenger.of(context).showSnackBar(
+                  //       SnackBar(
+                  //         content: Text(
+                  //           left.message,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     (right) async {
+                  //       await context.read<OnboardingStateProvider>().writeUserToFirestore().then((value) {
+                  //         value.fold(
+                  //           (left) => ScaffoldMessenger.of(context).showSnackBar(
+                  //             SnackBar(
+                  //               content: Text(
+                  //                 left.message,
+                  //               ),
+                  //             ),
+                  //           ),
+                  //           (right) async {
+                  //             await context.read<OnboardingStateProvider>().writeUserToLocalStorage().then((value) {
+                  //               value.fold(
+                  //                   (left) => ScaffoldMessenger.of(context).showSnackBar(
+                  //                         SnackBar(
+                  //                           content: Text(
+                  //                             left.message,
+                  //                           ),
+                  //                         ),
+                  //                       ), (right) {
+                  //                 if (right) {
+                  //                   Navigator.pushReplacementNamed(context, "/base");
+                  //                 } else {
+                  //                   ScaffoldMessenger.of(context).showSnackBar(
+                  //                     const SnackBar(
+                  //                       content: Text(
+                  //                         "Unable to store user data. Please try again!",
+                  //                       ),
+                  //                     ),
+                  //                   );
+                  //                 }
+                  //               });
+                  //             });
+                  //           },
+                  //         );
+                  //       });
+                  //     },
+                  //   );
+                  // });
+                },
                 leadingIcon: true,
                 child: const Text(
                   "Continue with Google",
@@ -64,12 +171,7 @@ class _OnboardingViewState extends State<OnboardingView> {
             ),
             if (pageState != OnboardingViewState.loading)
               Hyperlink(
-                onTap: () async {
-                  await context.read<GeneratorStateProvider>().fetchDogBreeds();
-                  if (pageState != OnboardingViewState.loading) {
-                    Navigator.pushNamed(context, '/base');
-                  }
-                },
+                onTap: () => Navigator.pushReplacementNamed(context, '/base'),
                 label: "Skip",
               ),
           ],

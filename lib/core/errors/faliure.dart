@@ -6,7 +6,7 @@ abstract class Faliure extends Equatable {
 
   const Faliure({
     required this.message,
-    required this.statusCode,
+    this.statusCode = 500,
   });
 
   @override
