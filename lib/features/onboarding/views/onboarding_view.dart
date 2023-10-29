@@ -91,7 +91,9 @@ class _OnboardingViewState extends State<OnboardingView> {
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content: Text("Unable to store user data. Please try again!"),
+                                      content: Text(
+                                        "Unable to store user data. Please try again!",
+                                      ),
                                     ),
                                   );
                                 }
@@ -104,59 +106,12 @@ class _OnboardingViewState extends State<OnboardingView> {
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text("Oops! Something went wrong. Please try again"),
+                        content: Text(
+                          "Oops! Something went wrong. Please try again",
+                        ),
                       ),
                     );
                   }
-
-                  // await context.read<OnboardingStateProvider>().signInWithGoogle().then((value) {
-                  //   value.fold(
-                  //     (left) => ScaffoldMessenger.of(context).showSnackBar(
-                  //       SnackBar(
-                  //         content: Text(
-                  //           left.message,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     (right) async {
-                  //       await context.read<OnboardingStateProvider>().writeUserToFirestore().then((value) {
-                  //         value.fold(
-                  //           (left) => ScaffoldMessenger.of(context).showSnackBar(
-                  //             SnackBar(
-                  //               content: Text(
-                  //                 left.message,
-                  //               ),
-                  //             ),
-                  //           ),
-                  //           (right) async {
-                  //             await context.read<OnboardingStateProvider>().writeUserToLocalStorage().then((value) {
-                  //               value.fold(
-                  //                   (left) => ScaffoldMessenger.of(context).showSnackBar(
-                  //                         SnackBar(
-                  //                           content: Text(
-                  //                             left.message,
-                  //                           ),
-                  //                         ),
-                  //                       ), (right) {
-                  //                 if (right) {
-                  //                   Navigator.pushReplacementNamed(context, "/base");
-                  //                 } else {
-                  //                   ScaffoldMessenger.of(context).showSnackBar(
-                  //                     const SnackBar(
-                  //                       content: Text(
-                  //                         "Unable to store user data. Please try again!",
-                  //                       ),
-                  //                     ),
-                  //                   );
-                  //                 }
-                  //               });
-                  //             });
-                  //           },
-                  //         );
-                  //       });
-                  //     },
-                  //   );
-                  // });
                 },
                 leadingIcon: true,
                 child: const Text(
@@ -171,7 +126,33 @@ class _OnboardingViewState extends State<OnboardingView> {
             ),
             if (pageState != OnboardingViewState.loading)
               Hyperlink(
-                onTap: () => Navigator.pushReplacementNamed(context, '/base'),
+                onTap: () async {
+                  final writeLocalStorageResult =
+                      await context.read<OnboardingStateProvider>().writeisFirstTimeToLocalStorage();
+
+                  writeLocalStorageResult.fold(
+                    (left) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(left.message),
+                        ),
+                      );
+                    },
+                    (right) {
+                      if (right) {
+                        Navigator.pushReplacementNamed(context, "/base");
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              "Unable to store user data. Please try again!",
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  );
+                },
                 label: "Skip",
               ),
           ],

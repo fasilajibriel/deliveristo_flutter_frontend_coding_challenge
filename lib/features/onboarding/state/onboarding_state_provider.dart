@@ -8,15 +8,35 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+/// A state management class for the onboarding process and user data.
+///
+/// This class manages the state of the onboarding process and user data within
+/// the app. It provides methods for checking if it's the user's first time
+/// using the app, signing in with Google, storing user data in Firestore,
+/// saving user data to local storage, and updating the "first time" flag.
 class OnboardingStateProvider with ChangeNotifier {
   var _pageState = OnboardingViewState.loading;
 
   UserModel _user = const UserModel.empty();
 
+  /// Get the current state of the onboarding process.
   OnboardingViewState get getPageState => _pageState;
 
+  /// Get the user data.
   UserModel get getUser => _user;
 
+  /// Check if it's the user's first time using the app.
+  ///
+  /// This method checks if the "firstTime" flag is set to `true` in local
+  /// storage using the `OnboardingLocalService`. If it's the user's first time,
+  /// it updates the page state to `OnboardingViewState.success` and returns
+  /// `true`. If it's not the first time, it attempts to load the user's data
+  /// with `handleReturningUserData()` and returns `true` if successful. On any
+  /// errors, it updates the page state to `OnboardingViewState.failed` and
+  /// returns `true`.
+  ///
+  /// Returns `true` if it's the user's first time or if an error occurred,
+  /// `false` otherwise.
   Future<bool> checkFirstTime() async {
     try {
       final bool isFirstTime = await OnboardingLocalService.readIsFirstBool();
@@ -39,26 +59,49 @@ class OnboardingStateProvider with ChangeNotifier {
     }
   }
 
+  /// Handle the process of returning user data.
+  ///
+  /// This method attempts to load user data using `OnboardingLocalService`. If
+  /// the user data is successfully retrieved, it updates the `_user` object and
+  /// returns `true`. If the user data is not found or an error occurs, it
+  /// updates the page state to `OnboardingViewState.failed` and returns `false`
+  ///
+  /// Returns `true` if user data is successfully loaded, `false` otherwise.
   Future<bool> handleReturningUserData() async {
-    final UserModel user = await OnboardingLocalService.readUserObject();
+    try {
+      final UserModel user = await OnboardingLocalService.readUserObject();
 
-    if (user == const UserModel.empty()) {
+      if (user == const UserModel.empty()) {
+        _pageState = OnboardingViewState.failed;
+        notifyListeners();
+
+        return false;
+      }
+
+      _user = _user.copyWith(
+        documentId: user.documentId,
+        displayName: user.displayName,
+        photoUrl: user.photoUrl,
+        email: user.email,
+      );
+
+      return true;
+    } catch (exception) {
       _pageState = OnboardingViewState.failed;
       notifyListeners();
 
       return false;
     }
-
-    _user = _user.copyWith(
-      documentId: user.documentId,
-      displayName: user.displayName,
-      photoUrl: user.photoUrl,
-      email: user.email,
-    );
-
-    return true;
   }
 
+  /// Sign in with a Google account.
+  ///
+  /// This method initiates the Google Sign-In process, authenticates the user,
+  /// and updates the `_user` object with the Google account information if
+  /// successful.
+  ///
+  /// Returns `Right(true)` if the sign-in is successful, or `Left(ApiFailure)`
+  /// on failure.
   FutureResult<bool> signInWithGoogle() async {
     _pageState = OnboardingViewState.loading;
     notifyListeners();
@@ -100,6 +143,14 @@ class OnboardingStateProvider with ChangeNotifier {
     }
   }
 
+  /// Write user data to Firestore.
+  ///
+  /// This method sends user data to Firestore using `OnboardingRemoteServices`.
+  /// If successful, it updates the `_user` object with the Firestore document
+  /// ID.
+  ///
+  /// Returns `Right(true)` if the write operation is successful, or
+  /// `Left(ApiFailure)` on failure.
   FutureResult<bool> writeUserToFirestore() async {
     try {
       final writeToFirestoreResult = await OnboardingRemoteServices.writeUserToFirestore(
@@ -130,6 +181,14 @@ class OnboardingStateProvider with ChangeNotifier {
     }
   }
 
+  /// Write user data to local storage.
+  ///
+  /// This method stores user data in local storage using
+  /// `OnboardingLocalService`. It also updates the "first time" flag in local
+  /// storage.
+  ///
+  /// Returns `Right(true)` if both write operations are successful, or
+  /// `Left(ApiFailure)` on failure.
   FutureResult<bool> writeUserToLocalStorage() async {
     try {
       final writeToLocalResult = await OnboardingLocalService.writeUserObject(
@@ -148,6 +207,13 @@ class OnboardingStateProvider with ChangeNotifier {
     }
   }
 
+  /// Update the "first time" flag in local storage.
+  ///
+  /// This method updates the "firstTime" flag in local storage to indicate that
+  /// the user is no longer using the app for the first time.
+  ///
+  /// Returns `Right(true)` if the flag is successfully updated, or
+  /// `Left(ApiFailure)` on failure.
   FutureResult<bool> writeisFirstTimeToLocalStorage() async {
     try {
       final updateIsFirstTimeResult = await OnboardingLocalService.writeIsFirstBool(

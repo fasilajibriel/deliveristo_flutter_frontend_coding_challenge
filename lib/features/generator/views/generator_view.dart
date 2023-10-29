@@ -48,7 +48,7 @@ class _GeneratorViewState extends State<GeneratorView> {
                     ),
                   ),
                   const Text(
-                    "Hmm, what does\nthat button do?",
+                    "Hmm, what does\nthis button do?",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black54,
