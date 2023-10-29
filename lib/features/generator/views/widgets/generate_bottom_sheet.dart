@@ -17,21 +17,6 @@ class GenerateBottomSheet extends StatefulWidget {
 }
 
 class _GenerateBottomSheetState extends State<GenerateBottomSheet> {
-  String selectedBreed = 'Breed';
-  String selectedSubBreed = 'Sub Breed';
-
-  void onBreedSelected(String? value) {
-    setState(() {
-      selectedBreed = value!;
-    });
-  }
-
-  void onSubBreedSelected(String? value) {
-    setState(() {
-      selectedSubBreed = value!;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -57,55 +42,6 @@ class _GenerateBottomSheetState extends State<GenerateBottomSheet> {
             BreedsDropdown(
               dogData: dogBreeds.breeds!,
             ),
-          // Column(
-          //   children: [
-          //     DropdownSearch<String>(
-          //       popupProps: const PopupProps.menu(
-          //         showSelectedItems: true,
-          //         showSearchBox: true,
-          //         searchDelay: Duration.zero,
-          //       ),
-          //       items: dogBreeds.breeds!.keys.map((element) => element).toList(),
-          //       dropdownDecoratorProps: const DropDownDecoratorProps(
-          //         dropdownSearchDecoration: InputDecoration(
-          //           labelText: "Choose a breed",
-          //         ),
-          //       ),
-          //       onChanged: (value) {
-          //         setState(() {
-          //           selectedBreed = value ?? "";
-          //         });
-          //       },
-          //       selectedItem: selectedBreed,
-          //     ),
-          //     const SizedBox(
-          //       height: ThemeConstants.defaultPadding,
-          //     ),
-          //     if (dogBreeds.breeds?[selectedBreed]?.isNotEmpty ?? false)
-          //       DropdownSearch<String>(
-          //         popupProps: const PopupProps.menu(
-          //           showSelectedItems: true,
-          //           showSearchBox: true,
-          //           searchDelay: Duration.zero,
-          //         ),
-          //         items: dogBreeds.breeds![selectedBreed]!.map((element) => element).toList(),
-          //         dropdownDecoratorProps: const DropDownDecoratorProps(
-          //           dropdownSearchDecoration: InputDecoration(
-          //             labelText: "Choose a sub breed",
-          //           ),
-          //         ),
-          //         onChanged: (value) {
-          //           setState(() {
-          //             selectedSubBreed = value ?? "";
-          //           });
-          //         },
-          //         selectedItem: selectedSubBreed,
-          //       ),
-          //     const SizedBox(
-          //       height: ThemeConstants.defaultPadding,
-          //     ),
-          //   ],
-          // ),
           if (pageState == GeneratorViewState.failed)
             const Center(
               child: Text("Oops, Something went wrong"),

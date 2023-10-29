@@ -1,5 +1,6 @@
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/theme_constants.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/content.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/custom_container.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/page_title.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/onboarding/data/user/user_model.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/onboarding/state/onboarding_state_provider.dart';
@@ -29,6 +30,7 @@ class _GeneratorViewState extends State<GeneratorView> {
   @override
   Widget build(BuildContext context) {
     final UserModel user = context.read<OnboardingStateProvider>().getUser;
+    final Size window = MediaQuery.of(context).size;
 
     return Content(
       child: Column(
@@ -37,6 +39,9 @@ class _GeneratorViewState extends State<GeneratorView> {
             title: "Welcome",
             description: user != const UserModel.empty() ? user.displayName : null,
           ),
+          // const SizedBox(
+          //   height: ThemeConstants.defaultPadding,
+          // ),
           Expanded(
             child: Center(
               child: Column(
@@ -58,6 +63,32 @@ class _GeneratorViewState extends State<GeneratorView> {
               ),
             ),
           )
+
+          // Expanded(
+          //   child: CustomContainer(
+          //     child: Container(
+          //       color: Colors.grey[400],
+          //     ),
+          //   ),
+          // ),
+          // Expanded(
+          //   child: GridView.builder(
+          //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //       crossAxisCount: 2,
+          //       childAspectRatio: 0.75,
+          //       mainAxisSpacing: ThemeConstants.defaultPadding,
+          //       crossAxisSpacing: ThemeConstants.defaultPadding,
+          //     ),
+          //     itemCount: 10,
+          //     itemBuilder: (context, index) {
+          //       return CustomContainer(
+          //         child: Container(
+          //           color: Colors.grey[400],
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );

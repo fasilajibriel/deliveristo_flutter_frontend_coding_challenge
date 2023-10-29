@@ -56,7 +56,7 @@ class PageTitle extends StatelessWidget {
           IconButton(
             onPressed: () {},
             icon: const Icon(
-              Icons.bookmark,
+              Icons.bookmark_outline,
               size: 30,
             ),
           ),
