@@ -92,5 +92,3 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Questions?
 If you have any questions or need further assistance, please don't hesitate to ask.
-
-Is there anything else you would like to include in the README, or any specific instructions for developers working on this project?
