@@ -3,7 +3,12 @@ import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widget
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+/// A widget for displaying saved dog images.
+///
+/// This widget provides a view for displaying dog images that the user has
+/// saved.
 class SavedView extends StatefulWidget {
+  /// Creates a [SavedView] widget.
   const SavedView({super.key});
 
   @override

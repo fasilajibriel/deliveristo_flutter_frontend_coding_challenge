@@ -15,6 +15,7 @@ class ImageGrid extends StatelessWidget {
   /// The model containing a list of dog images to display.
   final ImageListModel imageList;
 
+  /// An option that allows users to logpress on an image card to save.
   final bool longPress;
 
   /// Creates an [ImageGrid] widget with the given [imageList].

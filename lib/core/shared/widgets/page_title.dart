@@ -13,8 +13,10 @@ class PageTitle extends StatelessWidget {
   /// The title to be displayed.
   final String title;
 
+  /// A short description to provide additional information.
   final String? description;
 
+  /// A flag indicating the presence of a button.
   final bool hasButton;
 
   /// Creates a [PageTitle] widget.

@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
-import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/app_constants.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/dio_api_constants.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/errors/api_failure.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/utils/typedef.dart';
@@ -9,7 +6,7 @@ import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/data/image_list/image_list_model.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/data/random_image/random_image_model.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
 /// A class for performing remote services related to dog breed generation.
 ///
@@ -64,9 +61,20 @@ class GeneratorRemoteService {
     }
   }
 
-  static FutureResult<ImageListModel> generateBreedImageList({required String breed}) async {
+  /// Generates a list of breed-specific images.
+  ///
+  /// This method makes an HTTP GET request to retrieve a list of images for the
+  /// specified [breed]. It returns a [FutureResult] that can be either a
+  /// [Right] containing the image list or a [Left] with an [ApiFailure] if an
+  /// error occurs.
+  ///
+  /// If the request is successful (HTTP status code 200), it returns a [Right]
+  /// with the image list. Otherwise, it returns a [Left] with an [ApiFailure]
+  /// that includes the error message and status code.
+  static FutureResult<ImageListModel> generateBreedImageList({
+    required String breed,
+  }) async {
     try {
-      debugPrint("${DioApiConstants.breed}/$breed${DioApiConstants.getImageList}");
       final Response<dynamic> response = await dio.get(
         "${DioApiConstants.breed}/$breed${DioApiConstants.getImageList}",
       );
@@ -86,15 +94,24 @@ class GeneratorRemoteService {
         ),
       );
     } catch (exception) {
-      debugPrint(exception.toString());
-
       return Left(ApiFailure(message: exception.toString()));
     }
   }
 
-  static FutureResult<RandomImageModel> generateBreedRandomImage({required String breed}) async {
+  /// Generates a random image for a specific breed.
+  ///
+  /// This method makes an HTTP GET request to retrieve a random image for the
+  /// specified [breed]. It returns a [FutureResult] that can be either a
+  /// [Right] containing the random image or a [Left] with an [ApiFailure] if an
+  /// error occurs.
+  ///
+  /// If the request is successful (HTTP status code 200), it returns a [Right]
+  /// with the random image. Otherwise, it returns a [Left] with an [ApiFailure]
+  /// that includes the error message and status code.
+  static FutureResult<RandomImageModel> generateBreedRandomImage({
+    required String breed,
+  }) async {
     try {
-      debugPrint("${DioApiConstants.breed}/$breed${DioApiConstants.getRandomImage}");
       final Response<dynamic> response = await dio.get(
         "${DioApiConstants.breed}/$breed${DioApiConstants.getRandomImage}",
       );
@@ -114,18 +131,25 @@ class GeneratorRemoteService {
         ),
       );
     } catch (exception) {
-      debugPrint(exception.toString());
-
       return Left(ApiFailure(message: exception.toString()));
     }
   }
 
+  /// Generates a list of sub-breed-specific images.
+  ///
+  /// This method makes an HTTP GET request to retrieve a list of images for the
+  /// specified [subBreed] under the [breed]. It returns a [FutureResult] that
+  /// can be either a [Right] containing the image list or a [Left] with an
+  /// [ApiFailure] if an error occurs.
+  ///
+  /// If the request is successful (HTTP status code 200), it returns a [Right]
+  /// with the image list. Otherwise, it returns a [Left] with an [ApiFailure]
+  /// that includes the error message and status code.
   static FutureResult<ImageListModel> generateSubBreedImageList({
     required String breed,
     required String subBreed,
   }) async {
     try {
-      debugPrint("${DioApiConstants.breed}/$breed/$subBreed${DioApiConstants.getImageList}");
       final Response<dynamic> response = await dio.get(
         "${DioApiConstants.breed}/$breed/$subBreed${DioApiConstants.getImageList}",
       );
@@ -145,20 +169,27 @@ class GeneratorRemoteService {
         ),
       );
     } catch (exception) {
-      debugPrint(exception.toString());
-
       return Left(ApiFailure(message: exception.toString()));
     }
   }
 
+  /// Generates a random image for a specific sub-breed.
+  ///
+  /// This method makes an HTTP GET request to retrieve a random image for the
+  /// specified [subBreed] under the [breed]. It returns a [FutureResult] that
+  /// can be either a [Right] containing the random image or a [Left] with an
+  /// [ApiFailure] if an error occurs.
+  ///
+  /// If the request is successful (HTTP status code 200), it returns a [Right]
+  /// with the random image. Otherwise, it returns a [Left] with an [ApiFailure]
+  /// that includes the error message and status code.
   static FutureResult<RandomImageModel> generateSubBreedRandomImage({
     required String breed,
     required String subBreed,
   }) async {
     try {
-      debugPrint("${DioApiConstants.breed}/$breed/$subBreed${DioApiConstants.getRandomImage}");
       final Response<dynamic> response = await dio.get(
-        "${DioApiConstants.breed}/$breed${DioApiConstants.getRandomImage}",
+        "${DioApiConstants.breed}/$breed/$subBreed${DioApiConstants.getRandomImage}",
       );
 
       if (response.statusCode == 200) {
@@ -176,8 +207,6 @@ class GeneratorRemoteService {
         ),
       );
     } catch (exception) {
-      debugPrint(exception.toString());
-
       return Left(ApiFailure(message: exception.toString()));
     }
   }

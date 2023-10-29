@@ -18,9 +18,14 @@ class DogBreedModel extends DogBreedEntity {
     super.status,
   });
 
-  DogBreedModel.empty()
+  /// Creates an empty [DogBreedModel] instance.
+  ///
+  /// The [DogBreedModel.empty] constructor is a convenient way to create an
+  /// instance of [DogBreedModel] with default empty values. It sets the
+  /// [breeds] to `null` and the [status] to a default "_empty.status" string.
+  const DogBreedModel.empty()
       : this(
-          breeds: {},
+          breeds: null,
           status: "_empty.status",
         );
 

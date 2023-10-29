@@ -5,9 +5,22 @@ import 'package:deliveristo_flutter_frontend_coding_challenge/features/onboardin
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// A card widget for displaying images with optional long-press behavior.
+///
+/// This widget is used to display images in a card format and provides an
+/// option for adding long-press behavior to the images.
 class ImageCard extends StatefulWidget {
+  /// The URL of the image to be displayed in the card.
   final String imageUrl;
+
+  /// A boolean value indicating whether long-press behavior is enabled for the
+  /// card.
   final bool longPress;
+
+  /// Creates an [ImageCard] widget.
+  ///
+  /// The [imageUrl] parameter is required to specify the URL of the image to display.
+  /// The [longPress] parameter, when set to true (default), enables long-press behavior.
   const ImageCard({
     required this.imageUrl,
     this.longPress = true,

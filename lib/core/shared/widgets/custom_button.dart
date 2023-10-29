@@ -18,8 +18,6 @@ class CustomButton extends StatelessWidget {
   /// An optional icon widget that can be displayed before the child widget.
   final bool leadingIcon;
 
-  final bool halfPadding;
-
   /// Creates a [CustomButton] with the required [onTap] and [child], and an
   /// optional [leadingIcon] and [key].
   ///
@@ -31,7 +29,6 @@ class CustomButton extends StatelessWidget {
     required this.onTap,
     required this.child,
     this.leadingIcon = false,
-    this.halfPadding = false,
     super.key,
   });
 
@@ -41,7 +38,7 @@ class CustomButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          padding: EdgeInsets.all(halfPadding ? ThemeConstants.defaultPadding / 2 : ThemeConstants.defaultPadding),
+          padding: const EdgeInsets.all(ThemeConstants.defaultPadding),
           color: Theme.of(context).colorScheme.primaryContainer,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -11,7 +11,12 @@ import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// A bottom sheet widget for generating dog images or lists.
+///
+/// This widget is used to display options for generating dog images or lists in
+/// a bottom sheet.
 class GenerateBottomSheet extends StatefulWidget {
+  /// Creates a [GenerateBottomSheet] widget.
   const GenerateBottomSheet({super.key});
 
   @override
@@ -27,10 +32,8 @@ class _GenerateBottomSheetState extends State<GenerateBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final GeneratorViewState pageState =
-        context.watch<GeneratorStateProvider>().getPageState;
-    final DogBreedModel dogBreeds =
-        context.watch<GeneratorStateProvider>().getDogBreeds;
+    final GeneratorViewState pageState = context.watch<GeneratorStateProvider>().getPageState;
+    final DogBreedModel dogBreeds = context.watch<GeneratorStateProvider>().getDogBreeds;
 
     return Content(
       bottom: false,
@@ -46,15 +49,11 @@ class _GenerateBottomSheetState extends State<GenerateBottomSheet> {
             BreedsDropdown(
               dogData: dogBreeds.breeds!,
             ),
-          if (pageState == GeneratorViewState.success)
-            const RequestTypeRadioButton(),
-          if (pageState == GeneratorViewState.failed &&
-              dogBreeds == DogBreedModel.empty())
-            const FetchBreedError(),
+          if (pageState == GeneratorViewState.success) const RequestTypeRadioButton(),
+          if (pageState == GeneratorViewState.failed && dogBreeds == DogBreedModel.empty()) const FetchBreedError(),
           CustomButton(
             onTap: () {
-              if (context.read<GeneratorStateProvider>().getSelectedBreed !=
-                  AppConstants.breedDropdownDefaultValue) {
+              if (context.read<GeneratorStateProvider>().getSelectedBreed != AppConstants.breedDropdownDefaultValue) {
                 context.read<GeneratorStateProvider>().generateRequest();
                 Navigator.pop(context);
               }
