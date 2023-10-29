@@ -23,8 +23,10 @@ class OnboardingRemoteServices {
     required UserModel user,
   }) async {
     try {
-      final FirebaseFirestore firebaseFirestoreInstance = FirebaseFirestore.instance;
-      final CollectionReference usersCollectionReference = firebaseFirestoreInstance.collection(
+      final FirebaseFirestore firebaseFirestoreInstance =
+          FirebaseFirestore.instance;
+      final CollectionReference usersCollectionReference =
+          firebaseFirestoreInstance.collection(
         FirebaseApiConstants.usersCollection,
       );
 

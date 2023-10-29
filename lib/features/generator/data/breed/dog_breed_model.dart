@@ -18,6 +18,12 @@ class DogBreedModel extends DogBreedEntity {
     super.status,
   });
 
+  DogBreedModel.empty()
+      : this(
+          breeds: {},
+          status: "_empty.status",
+        );
+
   /// Creates a [DogBreedModel] from a JSON-encoded string.
   ///
   /// This factory method parses the JSON [data] and constructs a

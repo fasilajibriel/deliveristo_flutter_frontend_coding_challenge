@@ -3,6 +3,7 @@ import 'package:deliveristo_flutter_frontend_coding_challenge/features/base_layo
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/state/generator_state_provider.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/onboarding/state/onboarding_state_provider.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/onboarding/views/onboarding_view.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/features/saved/views/saved_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,6 +48,7 @@ class Main extends StatelessWidget {
         home: const OnboardingView(),
         routes: {
           '/base': (context) => const BaseLayout(),
+          '/saved': (context) => const SavedView(),
         },
       ),
     );

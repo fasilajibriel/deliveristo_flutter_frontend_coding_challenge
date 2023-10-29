@@ -19,7 +19,8 @@ class OnboardingLocalService {
   /// failure.
   static Future<bool> writeIsFirstBool({required bool isFirstTime}) async {
     const String key = "firstTime";
-    final SharedPreferences preferenceInstance = await SharedPreferences.getInstance();
+    final SharedPreferences preferenceInstance =
+        await SharedPreferences.getInstance();
 
     return preferenceInstance.setBool(key, isFirstTime);
   }
@@ -34,7 +35,8 @@ class OnboardingLocalService {
   /// not set or set to `false`.
   static Future<bool> readIsFirstBool() async {
     const String key = "firstTime";
-    final SharedPreferences preferenceInstance = await SharedPreferences.getInstance();
+    final SharedPreferences preferenceInstance =
+        await SharedPreferences.getInstance();
 
     if (preferenceInstance.containsKey(key)) {
       return preferenceInstance.getBool(key)!;
@@ -52,7 +54,8 @@ class OnboardingLocalService {
   /// failure.
   static Future<bool> writeUserObject({required UserModel user}) async {
     const String key = "user";
-    final SharedPreferences preferenceInstance = await SharedPreferences.getInstance();
+    final SharedPreferences preferenceInstance =
+        await SharedPreferences.getInstance();
 
     return preferenceInstance.setString(key, user.toJson());
   }
@@ -66,9 +69,12 @@ class OnboardingLocalService {
   /// Returns the stored `UserModel` or an empty `UserModel` object.
   static Future<UserModel> readUserObject() async {
     const String key = "user";
-    final SharedPreferences preferenceInstance = await SharedPreferences.getInstance();
+    final SharedPreferences preferenceInstance =
+        await SharedPreferences.getInstance();
     final userJson = preferenceInstance.getString(key);
 
-    return userJson != null ? UserModel.fromJson(userJson) : const UserModel.empty();
+    return userJson != null
+        ? UserModel.fromJson(userJson)
+        : const UserModel.empty();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/app_constants.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/theme_constants.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/content.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widgets/custom_button.dart';
@@ -5,7 +6,8 @@ import 'package:deliveristo_flutter_frontend_coding_challenge/core/shared/widget
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/data/breed/dog_breed_model.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/state/generator_state_provider.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/views/widgets/breeds_dropdown.dart';
-import 'package:dropdown_search/dropdown_search.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/views/widgets/fetch_breed_error.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/views/widgets/request_type_radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,8 +27,10 @@ class _GenerateBottomSheetState extends State<GenerateBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final GeneratorViewState pageState = context.watch<GeneratorStateProvider>().getPageState;
-    final DogBreedModel dogBreeds = context.watch<GeneratorStateProvider>().getDogBreeds;
+    final GeneratorViewState pageState =
+        context.watch<GeneratorStateProvider>().getPageState;
+    final DogBreedModel dogBreeds =
+        context.watch<GeneratorStateProvider>().getDogBreeds;
 
     return Content(
       bottom: false,
@@ -42,14 +46,21 @@ class _GenerateBottomSheetState extends State<GenerateBottomSheet> {
             BreedsDropdown(
               dogData: dogBreeds.breeds!,
             ),
-          if (pageState == GeneratorViewState.failed)
-            const Center(
-              child: Text("Oops, Something went wrong"),
-            ),
+          if (pageState == GeneratorViewState.success)
+            const RequestTypeRadioButton(),
+          if (pageState == GeneratorViewState.failed &&
+              dogBreeds == DogBreedModel.empty())
+            const FetchBreedError(),
           CustomButton(
-            onTap: () => Navigator.pop(context),
+            onTap: () {
+              if (context.read<GeneratorStateProvider>().getSelectedBreed !=
+                  AppConstants.breedDropdownDefaultValue) {
+                context.read<GeneratorStateProvider>().generateRequest();
+                Navigator.pop(context);
+              }
+            },
             child: const Text(
-              "Generate",
+              "Generate Image",
               style: TextStyle(
                 fontWeight: ThemeConstants.semiBold,
               ),

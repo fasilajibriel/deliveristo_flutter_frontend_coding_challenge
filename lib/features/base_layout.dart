@@ -6,6 +6,7 @@ import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/views/widgets/generate_bottom_sheet.dart';
 import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/views/generator_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
 /// A base layout widget for building the core structure of the application.
@@ -41,8 +42,6 @@ class _BaseLayoutState extends State<BaseLayout> {
             minWidth: MediaQuery.of(context).size.width,
           ),
           builder: (context) {
-            // context.read<GeneratorStateProvider>().fetchDogBreeds();
-
             return const GenerateBottomSheet();
           },
         ),

@@ -42,7 +42,15 @@ class _OnboardingViewState extends State<OnboardingView> {
       body: Content(
         child: Column(
           children: [
-            Expanded(child: Container()),
+            Expanded(
+              child: Center(
+                child: SizedBox(
+                  width: 200,
+                  height: 200,
+                  child: Image.asset("assets/images/d_icon.png"),
+                ),
+              ),
+            ),
             if (pageState == OnboardingViewState.loading)
               const LoadingAnimation(
                 size: 100.0,
@@ -50,7 +58,6 @@ class _OnboardingViewState extends State<OnboardingView> {
             if (pageState != OnboardingViewState.loading)
               CustomButton(
                 onTap: () async {
-                  // TODO: Move to somewhere
                   try {
                     final signInResult = await context.read<OnboardingStateProvider>().signInWithGoogle();
 

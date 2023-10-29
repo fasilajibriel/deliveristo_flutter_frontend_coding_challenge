@@ -15,6 +15,8 @@ class PageTitle extends StatelessWidget {
 
   final String? description;
 
+  final bool hasButton;
+
   /// Creates a [PageTitle] widget.
   ///
   /// The [title] parameter is required and specifies the text that appears as
@@ -23,6 +25,7 @@ class PageTitle extends StatelessWidget {
   const PageTitle({
     required this.title,
     this.description,
+    this.hasButton = false,
     super.key,
   });
 
@@ -53,13 +56,16 @@ class PageTitle extends StatelessWidget {
                 ),
             ],
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.bookmark_outline,
-              size: 30,
+          if (hasButton)
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/saved');
+              },
+              icon: const Icon(
+                Icons.bookmark_outline,
+                size: 30,
+              ),
             ),
-          ),
         ],
       ),
     );

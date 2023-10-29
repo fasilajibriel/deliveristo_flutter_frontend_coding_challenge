@@ -1,6 +1,9 @@
 import 'package:deliveristo_flutter_frontend_coding_challenge/core/constants/theme_constants.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/core/services/string_extension.dart';
+import 'package:deliveristo_flutter_frontend_coding_challenge/features/generator/state/generator_state_provider.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BreedsDropdown extends StatefulWidget {
   final Map<String, List<String>> dogData;
@@ -14,65 +17,77 @@ class BreedsDropdown extends StatefulWidget {
 }
 
 class _DogBreedsDropdownState extends State<BreedsDropdown> {
-  String selectedBreed = 'Breed';
-  String selectedSubBreed = 'Sub Breed';
-
-  void onBreedSelected(String? value) {
-    setState(() {
-      selectedBreed = value ?? "";
-    });
-  }
-
-  void onSubBreedSelected(String? value) {
-    setState(() {
-      selectedSubBreed = value ?? "";
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        DropdownSearch<String>(
-          popupProps: const PopupProps.menu(
-            showSelectedItems: true,
-            showSearchBox: true,
-            searchDelay: Duration.zero,
-          ),
-          items: widget.dogData.keys.map((element) => element).toList(),
-          dropdownDecoratorProps: const DropDownDecoratorProps(
-            dropdownSearchDecoration: InputDecoration(
-              labelText: "Choose a breed",
-            ),
-          ),
-          onChanged: onBreedSelected,
-          selectedItem: selectedBreed,
-        ),
-        const SizedBox(
-          height: ThemeConstants.defaultPadding,
-        ),
-        if (widget.dogData[selectedBreed]?.isNotEmpty ?? false)
+    final GeneratorStateProvider generatorStateProviderListner =
+        context.watch<GeneratorStateProvider>();
+    final GeneratorStateProvider generatorStateProviderEvent =
+        context.read<GeneratorStateProvider>();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: ThemeConstants.defaultPadding,
+      ),
+      child: Column(
+        children: [
           DropdownSearch<String>(
             popupProps: const PopupProps.menu(
               showSelectedItems: true,
               showSearchBox: true,
               searchDelay: Duration.zero,
             ),
-            items: widget.dogData[selectedBreed]!.map((element) => element).toList(),
+            items: widget.dogData.keys
+                .map(
+                  (element) => element.capitalizeFirstLetter(),
+                )
+                .toList(),
             dropdownDecoratorProps: const DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                labelText: "Choose a sub breed",
+                labelText: "Choose a breed",
               ),
             ),
-            onChanged: onSubBreedSelected,
-            selectedItem: selectedBreed,
+            onChanged: generatorStateProviderEvent.setSelectedBreed,
+            selectedItem: generatorStateProviderListner.getSelectedBreed,
           ),
-        if (widget.dogData[selectedBreed]?.isNotEmpty ?? false)
           const SizedBox(
             height: ThemeConstants.defaultPadding,
           ),
-        // add random and list radio button
-      ],
+          if (widget
+                  .dogData[generatorStateProviderListner.getSelectedBreed
+                      .toLowerCase()]
+                  ?.isNotEmpty ??
+              false)
+            DropdownSearch<String>(
+              popupProps: const PopupProps.menu(
+                showSelectedItems: true,
+                showSearchBox: true,
+                searchDelay: Duration.zero,
+              ),
+              items: widget.dogData[generatorStateProviderListner
+                      .getSelectedBreed
+                      .toLowerCase()]!
+                  .map(
+                    (element) => element.capitalizeFirstLetter(),
+                  )
+                  .toList(),
+              dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                  labelText: "Choose a sub breed [optional]",
+                ),
+              ),
+              onChanged: generatorStateProviderEvent.setSelectedSubBreed,
+              selectedItem: generatorStateProviderListner.getSelectedSubBreed,
+            ),
+          if (widget
+                  .dogData[generatorStateProviderListner.getSelectedBreed
+                      .toLowerCase()]
+                  ?.isNotEmpty ??
+              false)
+            const SizedBox(
+              height: ThemeConstants.defaultPadding,
+            ),
+        ],
+      ),
     );
   }
 }
